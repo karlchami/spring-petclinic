@@ -26,6 +26,18 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            when {
+            expression {
+                GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                return (GIT_BRANCH == 'master')
+            }
+            steps {
+                withEnv( ["PATH+MAVEN=Maven 3.6.3/bin"] ) {
+                    sh 'mvn deploy' 
+                }
+            }
+        }
     }
     post {
         success{
