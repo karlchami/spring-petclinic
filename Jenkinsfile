@@ -6,6 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
                 withEnv( ["PATH+MAVEN=Maven 3.6.3/bin"] ) {
                     sh 'mvn clean' 
                 }
@@ -24,6 +25,14 @@ pipeline {
                     sh 'mvn package' 
                 }
             }
+        }
+    }
+    post {
+        success{
+            slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+        failure{
+           slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})") 
         }
     }
 }
