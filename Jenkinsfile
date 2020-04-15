@@ -1,34 +1,33 @@
 pipeline {
     agent any
+    tools {
+        maven 'M3'
+    }
     stages {
         stage('Build') {
             steps {
-                def mvn_version = 'M3'
-                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+                withEnv( ["PATH+MAVEN=M3/bin"] ) {
                     sh 'mvn clean' 
                 }
             }
         }
         stage('Test') {
             steps {
-                def mvn_version = 'M3'
-                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+                withEnv( ["PATH+MAVEN=M3/bin"] ) {
                     sh 'mvn test' 
                 }
             }
         }
         stage('Package') {
             steps {
-                def mvn_version = 'M3'
-                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+                withEnv( ["PATH+MAVEN=M3/bin"] ) {
                     sh 'mvn package' 
                 }
             }
         }
         stage('Deploy') {
             steps {
-                def mvn_version = 'M3'
-                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+                withEnv( ["PATH+MAVEN=M3/bin"] ) {
                     sh 'mvn deploy' 
                 }
             }
