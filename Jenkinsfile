@@ -1,30 +1,31 @@
 pipeline {
+    def mvn_version = 'M3'
     agent any
     stages {
         stage('Build') {
             steps {
-                withMaven(maven : "Maven 3.6.3"){
+                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
                     sh 'mvn clean' 
                 }
             }
         }
         stage('Test') {
             steps {
-                withMaven(maven : "Maven 3.6.3"){
+                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
                     sh 'mvn test' 
                 }
             }
         }
         stage('Package') {
             steps {
-                withMaven(maven : "Maven 3.6.3"){
+                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
                     sh 'mvn package' 
                 }
             }
         }
         stage('Deploy') {
             steps {
-                withMaven(maven : "Maven 3.6.3"){
+                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
                     sh 'mvn deploy' 
                 }
             }
