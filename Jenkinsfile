@@ -3,17 +3,30 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean' 
+                withMaven(maven : "Maven 3.6.3"){
+                    sh 'mvn clean' 
+                }
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test' 
+                withMaven(maven : "Maven 3.6.3"){
+                    sh 'mvn test' 
+                }
+            }
+        }
+        stage('Package') {
+            steps {
+                withMaven(maven : "Maven 3.6.3"){
+                    sh 'mvn package' 
+                }
             }
         }
         stage('Deploy') {
             steps {
-                sh 'mvn deploy' 
+                withMaven(maven : "Maven 3.6.3"){
+                    sh 'mvn deploy' 
+                }
             }
         }
     }
