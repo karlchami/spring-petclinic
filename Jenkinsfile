@@ -25,12 +25,5 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                withEnv( ["PATH+MAVEN=Maven 3.6.3/bin"] ) {
-                    sh 'mvn deploy' 
-                }
-            }
-        }
     }
 }
